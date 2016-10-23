@@ -4,6 +4,8 @@ services:
   app:
     environment:
       # This is required when nginx-proxy is enabled.
+      - LETSENCRYPT_EMAIL=hello@app.junday
+      - LETSENCRYPT_HOST=app.junday
       - VIRTUAL_HOST=app.junday
 
   nginx-proxy:
