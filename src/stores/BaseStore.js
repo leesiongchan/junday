@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 import firebaseAdapter from './adapters/firebase-adapter';
 
@@ -8,12 +8,7 @@ class BaseStore {
   ref = null;
 
   @observable items = [];
-  @observable pendingRequestCount = 0;
-
-  @computed
-  get isLoading() {
-    return this.pendingRequestCount > 0;
-  }
+  @observable isLoading = false;
 
   constructor(ref, State) {
     this.firebaseAdapter = firebaseAdapter;
@@ -21,11 +16,11 @@ class BaseStore {
     this.ref = this.firebaseAdapter.database().ref(ref);
     this.State = State;
 
-    this.addPendingRequestCount(1);
+    this.setLoading(true);
 
     this.ref.on('value', (snapshot) => {
       this.update(snapshot.val());
-      this.addPendingRequestCount(-1);
+      this.setLoading(false);
     });
   }
 
@@ -39,11 +34,6 @@ class BaseStore {
         }
       });
     });
-  }
-
-  @action
-  addPendingRequestCount(count) {
-    this.pendingRequestCount += count;
   }
 
   save(id, data) {
@@ -61,6 +51,11 @@ class BaseStore {
         }
       });
     });
+  }
+
+  @action
+  setLoading(loading) {
+    this.isLoading = loading;
   }
 
   @action

@@ -6,7 +6,6 @@ import { observer } from 'mobx-react';
 
 import Loader from 'app/components/Loader';
 import styles from './styles.css';
-import { Guest } from 'app/stores/GuestStore';
 
 @observer
 class GuestIndexPage extends Component {
@@ -15,17 +14,13 @@ class GuestIndexPage extends Component {
     guestStore: PropTypes.object.isRequired,
   };
 
-  @observable guest = new Guest();
-
-  @observable isOpen = false;
   @observable isPopoverOpen = false;
   @observable popoverAnchorEl = null;
-  @observable popoverGuest = {};
-  @observable submitting = false;
+  @observable popoverGuest = null;
 
   @computed
   get guests() {
-    return this.props.guestStore.items;
+    return this.props.guestStore.items.peek();
   }
 
   @action
@@ -121,7 +116,9 @@ class GuestIndexPage extends Component {
           open={this.isPopoverOpen}
           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
-          <QRCode value={this.popoverGuest.id} />
+          {this.popoverGuest &&
+            <QRCode value={this.popoverGuest.id} />
+          }
         </Popover>
       </div>
     );

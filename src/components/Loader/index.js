@@ -3,7 +3,7 @@ import { CircularProgress } from 'material-ui';
 
 import styles from './styles.css';
 
-const Loader = ({ mode = 'indeterminate', size = 1, value }) => (
+const Loader = ({ mode = 'indeterminate', size = 80, value }) => (
   <div className={styles.main}>
     <CircularProgress mode={mode} size={size} value={value} />
   </div>
