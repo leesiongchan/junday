@@ -21,11 +21,10 @@ COPY server.babel.js ./
 COPY src src/
 COPY templates templates/
 COPY webpack.config.babel.js ./
-RUN yarn run build
+RUN NODE_ENV=production yarn run build
 
 COPY docker/app/start.sh /
 COPY docker/app/update-env-vars.sh /
-
 
 EXPOSE 3000
 CMD ["/start.sh"]
