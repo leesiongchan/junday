@@ -1,10 +1,54 @@
 @import "variables";
 
 .main {
-
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Components */
-.content {
+.breadcrumbsItem {
+  color: $scorpion;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-right: 6px;
 
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  a {
+    color: rgba($scorpion, 0.5);
+    margin-right: 6px;
+
+    &:hover {
+      color: rgba($scorpion, 0.75);
+    }
+  }
+}
+
+.breadcrumbsWrapper {
+
+}
+
+.container {
+  lost-center: $container-width;
+
+  flex-direction: column;
+}
+
+.content {
+}
+
+.contentHeader {
+  padding: 20px 0;
+}
+
+.contentWrapper {
+  background-color: $wild-sand;
+  flex: 1;
+}
+
+.innerContent {
 }

@@ -1,0 +1,19 @@
+@import "variables";
+
+$height : 60px;
+
+.main {
+  align-items: center;
+  border-left: 1px solid rgba($white, 0.3);
+  border-right: 1px solid rgba($white, 0.3);
+  box-sizing: border-box;
+  color: $white;
+  display: flex;
+  height: $height;
+  padding: 15px 25px;
+}
+
+/* Components */
+.username {
+  font-weight: 600;
+}

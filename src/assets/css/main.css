@@ -1,4 +1,4 @@
-@import "normalize.css/normalize.css";
+@import "sanitize.css/sanitize.css";
 
 @import "variables";
 /* @import "overrides"; */
@@ -89,6 +89,11 @@ label {
 picture {
   align-items: center;
   display: flex;
+}
+
+span[type="button"] {
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 textarea {

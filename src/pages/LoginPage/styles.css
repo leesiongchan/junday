@@ -1,0 +1,38 @@
+@import 'variables';
+
+$panel-padding : 35px;
+$panel-width   : 350px;
+
+.main {
+  background-color: $wild-sand;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Components */
+.header {
+  margin-bottom: calc($panel-padding - 10px);
+}
+
+.panel {
+  background-color: $white;
+  border: $border;
+  margin: 0 auto;
+  padding: calc($panel-padding - 10px) $panel-padding;
+  width: $panel-width;
+}
+
+.signUp {
+  color: $coral-red;
+
+  &:hover {
+    color: rgba($coral-red, 0.7);
+  }
+}
+
+.title {
+  font-size: 18px;
+  margin: 0;
+}

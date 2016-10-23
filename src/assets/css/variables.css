@@ -10,6 +10,7 @@ $white            : #ffffff;
 
 /* Red */
 $coral-red        : #ff4546;
+$pink             : #ffcccb;
 
 /* Yellow */
 $selective-yellow : #f9ae3b;
@@ -29,9 +30,9 @@ $thunder          : #231f20;
 $wild-sand        : #f4f4f4;
 
 /* Fonts */
-$poppins          : "Poppins";
+$roboto           : "Roboto";
 
-$base-font        : $poppins, Circular, Helvetica, Arial, sans-serif;
+$base-font        : $roboto, Circular, Helvetica, Arial, sans-serif;
 $base-font-size   : 14px;
 $base-font-weight : 400;
 $base-line-height : 1.43;

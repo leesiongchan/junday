@@ -1,6 +1,18 @@
-# Mobx + React + Hot Reload + PostCSS + Webpack + Storybook + Docker project starter
+# Junday
 
-Nothing fancy just a suite of packages that fit my personal taste.
+A guest registration platform for your unforgettable wedding. This is just a project build for a good friend of mine, [Yi Jun Lim](https://www.facebook.com/jun901104).
+
+This project is built using [React](https://facebook.github.io/react/) + [MobX](https://github.com/mobxjs/mobx) to create a comprehensive easy-to-manage web application.
+
+You may check out the site at [JunDay](http://junday.xyz).
+
+## Features
+
+- [ ] Comprehensive dashboard
+- [ ] User/Administrator management
+- [x] Record guests information
+- [ ] Register guests by using QR code scan
+- [x] Table seating management
 
 ## Getting started
 

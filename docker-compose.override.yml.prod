@@ -4,7 +4,7 @@ services:
   app:
     environment:
       # This is required when nginx-proxy is enabled.
-      - VIRTUAL_HOST=app.mobx.dev
+      - VIRTUAL_HOST=app.junday
 
   nginx-proxy:
     image: jwilder/nginx-proxy

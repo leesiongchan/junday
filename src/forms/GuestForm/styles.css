@@ -1,0 +1,78 @@
+.main {
+  lost-flex-container: row;
+}
+
+/* Components */
+.aside {
+  lost-column: 4/12;
+}
+
+.content {
+  lost-column: 8/12;
+
+  min-height: 465px;
+}
+
+.label {
+  color: rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 17px;
+}
+
+.tables {
+  lost-flex-container: row;
+
+  margin-top: 12px;
+}
+
+.table {
+  align-items: center;
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  justify-content: center;
+  position: relative;
+  width: 80px;
+
+  &.free {
+    background-color: green;
+  }
+
+  &.busy {
+    background-color: orange;
+  }
+
+  &.full {
+    background-color: red;
+  }
+
+  &.overCapacity {
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: default;
+  }
+
+  &.selected {
+    border-color: #607d8b;
+  }
+}
+
+.tableItem {
+  lost-waffle: 1/6 6 5px;
+}
+
+.tableNum {
+  font-size: 10px;
+  font-weight: bold;
+  left: 0;
+  margin-top: 4px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}

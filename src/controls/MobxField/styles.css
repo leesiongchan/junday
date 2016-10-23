@@ -1,0 +1,12 @@
+@import "variables";
+
+.main {
+
+}
+
+/* Components */
+.error {
+  color: $coral-red;
+  font-size: $base-font-size;
+  font-weight: $base-font-weight;
+}
