@@ -1,32 +1,57 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import { action, observable, runInAction } from 'mobx';
-import { Card, RaisedButton, TextField } from 'material-ui';
+import { action, autorun, observable } from 'mobx';
+import { Card, RaisedButton } from 'material-ui';
 import { observer } from 'mobx-react';
 
+import MobxForm from 'app/libs/mobx-react-form';
+import SettingsForm, { formOptions as settingsFormOptions } from 'app/forms/SettingsForm';
 import styles from './styles.css';
 
 @observer
-class Settings extends Component {
+class SettingsPage extends Component {
   static propTypes = {
-    settingStore: PropTypes.object.isRequired,
+    settingsStore: PropTypes.object.isRequired,
   };
+
+  componentDidMount() {
+    autorun(() => {
+      this.settingsForm.update({
+        numTables: this.props.settingsStore.numTables,
+        seatingCapacity: this.props.settingsStore.seatingCapacity,
+      });
+    });
+  }
+
+  @action
+  setSubmitting(submitting) {
+    this.submitting = submitting;
+  }
+
+  settingsForm = new MobxForm(settingsFormOptions);
 
   @observable submitting = false;
 
-  handleInputChange(ev) {
-    this.props.settingStore[ev.target.name] = ev.target.value;
-  }
-  handleInputChange = ::this.handleInputChange;
-
   @action
-  async handleSaveClick(ev) {
-    this.submitting = true;
+  handleSaveClick(ev) {
+    this.settingsForm.onSubmit(ev, {
+      onError: (form) => {
+        const error = _.filter(form.errors(), e => !!e)[0];
 
-    await this.props.settingStore.save();
-    this.props.settingStore.rearrangeTables();
+        form.invalidate(error);
+      },
+      onSuccess: async (form) => {
+        this.setSubmitting(true);
 
-    runInAction(() => {
-      this.submitting = false;
+        try {
+          await this.props.settingsStore.save(form.values());
+          await this.props.settingsStore.rearrangeTables();
+        } catch (err) {
+          console.log('Error', err);
+        }
+
+        this.setSubmitting(false);
+      },
     });
   }
   handleSaveClick = ::this.handleSaveClick;
@@ -36,39 +61,17 @@ class Settings extends Component {
       <div className={styles.main}>
         <Card>
           <div className={styles.content}>
-            <section className={styles.section}>
-              <TextField
-                disabled={this.submitting}
-                floatingLabelFixed
-                floatingLabelText="Number of Tables*"
-                hintText="30"
-                min={1}
-                name="numTables"
-                onChange={this.handleInputChange}
-                required
-                type="number"
-                value={this.props.settingStore.numTables}
-              />
-            </section>
+            {this.settingsForm.error &&
+              <p className={styles.error}>
+                {this.settingsForm.error}
+              </p>
+            }
 
-            <section className={styles.section}>
-              <TextField
-                disabled={this.submitting}
-                floatingLabelFixed
-                floatingLabelText="Table Seating Capacity*"
-                hintText="10"
-                min={1}
-                name="seatingCapacity"
-                onChange={this.handleInputChange}
-                required
-                type="number"
-                value={this.props.settingStore.seatingCapacity}
-              />
-            </section>
+            <SettingsForm fields={this.settingsForm} />
 
             <footer className={styles.footer}>
               <RaisedButton
-                disabled={this.submitting || this.props.settingStore.pristine}
+                disabled={this.submitting || !this.settingsForm.isValid}
                 label="Save"
                 onClick={this.handleSaveClick}
               />
@@ -80,4 +83,4 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+export default SettingsPage;

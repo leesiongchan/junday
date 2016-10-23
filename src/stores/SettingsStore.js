@@ -1,54 +1,52 @@
 import _ from 'lodash';
-import { action, autorun, computed, observable, transaction, when } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
-class SettingStore {
-  firebase = null;
-  ref = null;
+import BaseStore from './BaseStore';
+
+class SettingsStore extends BaseStore {
   tableStore = null;
 
   @observable numTables = null;
   @observable seatingCapacity = null;
 
-  @observable lastState = {};
+  @observable $original = {};
 
   @computed
   get pristine() {
-    return this.numTables === this.lastState.numTables && this.seatingCapacity === this.lastState.seatingCapacity;
+    return this.numTables === this.$original.numTables &&
+      this.seatingCapacity === this.$original.seatingCapacity;
   }
 
-  constructor(firebase, tableStore) {
-    this.firebase = firebase;
-    this.ref = firebase.database().ref('settings');
-    this.tableStore = tableStore;
+  constructor(tableStore) {
+    super('settings');
 
-    this.ref.on('value', snapshot => {
-      this.update(snapshot.val() || {});
-    });
+    this.tableStore = tableStore;
   }
 
   @action
   rearrangeTables() {
+    const promises = [];
+
     if (this.numTables > this.tableStore.items.length) {
       const lastTable = _.last(this.tableStore.items) || {};
       let tableNum = lastTable.tableNum || this.tableStore.items.length;
 
       for (let i = this.tableStore.items.length; i < this.numTables; i++) {
-        this.tableStore.add({
+        promises.push(this.tableStore.add({
           tableNum: ++tableNum,
-        });
+        }));
       }
     } else {
       this.tableStore.items = this.tableStore.items.slice(0, this.numTables);
       this.tableStore.save();
     }
+
+    return Promise.all(promises);
   }
 
-  save() {
+  save(formData) {
     return new Promise((resolve, reject) => {
-      this.ref.update({
-        numTables: this.numTables,
-        seatingCapacity: this.seatingCapacity,
-      }, err => {
+      this.ref.update(formData, (err) => {
         if (err) {
           reject(err);
         } else {
@@ -60,10 +58,10 @@ class SettingStore {
 
   @action
   update(data) {
-    this.lastState = { ...data };
+    this.$original = { ...data };
     this.numTables = data.numTables;
     this.seatingCapacity = data.seatingCapacity;
   }
 }
 
-export default SettingStore;
+export default SettingsStore;

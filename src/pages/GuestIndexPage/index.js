@@ -1,11 +1,9 @@
-import _ from 'lodash';
 import QRCode from 'qrcode.react';
 import React, { Component, PropTypes } from 'react';
-import { action, observable, runInAction } from 'mobx';
-import { Card, Dialog, FlatButton, FloatingActionButton, FontIcon, IconButton, Popover, Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui';
+import { action, computed, observable } from 'mobx';
+import { Card, IconButton, Popover, Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui';
 import { observer } from 'mobx-react';
 
-import GuestForm from 'app/forms/GuestForm';
 import Loader from 'app/components/Loader';
 import styles from './styles.css';
 import { Guest } from 'app/stores/GuestStore';
@@ -13,9 +11,8 @@ import { Guest } from 'app/stores/GuestStore';
 @observer
 class GuestIndexPage extends Component {
   static propTypes = {
+    appStore: PropTypes.object.isRequired,
     guestStore: PropTypes.object.isRequired,
-    settingStore: PropTypes.object.isRequired,
-    tableStore: PropTypes.object.isRequired,
   };
 
   @observable guest = new Guest();
@@ -26,6 +23,11 @@ class GuestIndexPage extends Component {
   @observable popoverGuest = {};
   @observable submitting = false;
 
+  @computed
+  get guests() {
+    return this.props.guestStore.items;
+  }
+
   @action
   handleDownloadClick(ev, guest) {
     this.isPopoverOpen = true;
@@ -34,37 +36,19 @@ class GuestIndexPage extends Component {
   }
   handleDownloadClick = ::this.handleDownloadClick;
 
-  @action
-  handleModalToggle(open) {
-    this.isOpen = typeof open === 'boolean' ? open : !this.state.isOpen;
+  handleEditGuestClick(guest) {
+    this.props.appStore.toggleGuestDialog(true, guest);
   }
-  handleModalToggle = ::this.handleModalToggle;
-
-  @action
-  handleSetGuest(guest) {
-    this.guest = guest || new Guest();
-  }
-  handleSetGuest = ::this.handleSetGuest;
+  handleEditGuestClick = ::this.handleEditGuestClick;
 
   @action
-  async handleSubmit() {
-    this.submitting = true;
-
-    if (this.guest.id) {
-      await this.props.guestStore.save();
-    } else {
-      await this.props.guestStore.add(this.guest.asJSON);
-    }
-
-    runInAction(() => {
-      this.isOpen = false;
-      this.submitting = false;
-    });
+  handlePopoverClose() {
+    this.isPopoverOpen = false;
   }
-  handleSubmit = ::this.handleSubmit;
+  handlePopoverClose = ::this.handlePopoverClose;
 
   render() {
-    const { guestStore, settingStore, tableStore, ...props } = this.props;
+    const { guestStore } = this.props;
 
     return (
       <div className={styles.main}>
@@ -83,7 +67,7 @@ class GuestIndexPage extends Component {
             </TableHeader>
 
             <TableBody displayRowCheckbox={false} selectable={false} showRowHover>
-              {guestStore.items && _.map(guestStore.items, (guest, index) =>
+              {!guestStore.isLoading && this.guests.map((guest, index) =>
                 <TableRow key={guest.id}>
                   <TableRowColumn width="80">{index + 1}</TableRowColumn>
                   <TableRowColumn>{guest.name}</TableRowColumn>
@@ -102,10 +86,7 @@ class GuestIndexPage extends Component {
 
                     <IconButton
                       iconClassName="material-icons"
-                      onClick={() => {
-                        this.handleSetGuest(guest);
-                        this.handleModalToggle(true);
-                      }}
+                      onClick={() => this.handleEditGuestClick(guest)}
                       tooltip="Edit"
                     >
                       input
@@ -114,7 +95,7 @@ class GuestIndexPage extends Component {
                 </TableRow>
               )}
 
-              {guestStore.items && guestStore.items.length === 0 &&
+              {!guestStore.isLoading && this.guests.length === 0 &&
                 <TableRow>
                   <TableRowColumn>
                     No Results
@@ -122,7 +103,7 @@ class GuestIndexPage extends Component {
                 </TableRow>
               }
 
-              {!guestStore.items &&
+              {guestStore.isLoading &&
                 <TableRow>
                   <TableRowColumn>
                     <Loader />
@@ -131,51 +112,17 @@ class GuestIndexPage extends Component {
               }
             </TableBody>
           </Table>
-
-          <span className={styles.add}>
-            <FloatingActionButton
-              mini
-              onClick={() => {
-                this.handleSetGuest();
-                this.handleModalToggle(true);
-              }}
-            >
-              <FontIcon className="material-icons">add</FontIcon>
-            </FloatingActionButton>
-          </span>
         </Card>
 
         <Popover
           anchorEl={this.popoverAnchorEl}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          onRequestClose={() => { this.isPopoverOpen = false; }}
+          onRequestClose={this.handlePopoverClose}
           open={this.isPopoverOpen}
           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           <QRCode value={this.popoverGuest.id} />
         </Popover>
-
-        <Dialog
-          actions={[
-            <FlatButton
-              disabled={this.submitting}
-              label="Cancel"
-              onTouchTap={() => this.handleModalToggle(false)}
-            />,
-            <FlatButton
-              disabled={this.guest.pristine || this.submitting}
-              label={this.guest.id ? 'Save' : 'Add'}
-              onTouchTap={this.handleSubmit}
-              primary
-            />,
-          ]}
-          bodyStyle={{ maxheight: 550 }}
-          open={this.isOpen}
-          title={this.guest.id ? 'Edit Guest' : 'Add Guest'}
-          contentStyle={{ maxWidth: 823, width: 'auto' }}
-        >
-          <GuestForm guest={this.guest} settingStore={settingStore} tableStore={tableStore} />
-        </Dialog>
       </div>
     );
   }

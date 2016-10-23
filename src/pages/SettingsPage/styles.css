@@ -1,10 +1,22 @@
+@import "variables";
+
 .main {
-  padding: 30px;
+  lost-center: $container-width;
+
+  padding-bottom: 60px;
+
+  > * {
+    width: 100%;
+  }
 }
 
 /* Components */
 .content {
-  padding: 30px;
+  padding: 10px 30px 30px;
+}
+
+.error {
+  color: $coral-red;
 }
 
 .footer {
@@ -12,5 +24,4 @@
 }
 
 .section {
-  margin-top: 15px;
 }

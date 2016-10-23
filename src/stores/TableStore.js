@@ -1,51 +1,51 @@
 import _ from 'lodash';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, toJS } from 'mobx';
 
-export class Table {
+import BaseState from './BaseState';
+import BaseStore from './BaseStore';
+
+export class Table extends BaseState {
   guestStore = null;
 
-  @observable id = null;
-  @observable ref = null;
   @observable tableNum = null;
-
-  @observable lastState = {};
-
-  @computed
-  get asJSON() {
-    return _.omitBy({
-      id: this.id,
-      numPeople: this.numPeople,
-      tableNum: this.tableNum,
-    }, _.isNil);
-  }
 
   @computed
   get numPeople() {
-    return this.guestStore
-      ? this.guestStore.items.reduce((n, i) => (
-        i.allocatedTableNum === this.tableNum ? n + parseInt(i.partySize, 10) : n
-      ), 0)
-      : 0;
+    return this.guestStore.items.reduce((n, i) => (
+      i.allocatedTableNum === this.tableNum ? n + parseInt(i.partySize, 10) : n
+    ), 0);
   }
 
   @computed
   get pristine() {
-    return this.id === this.lastState.id &&
-      this.tableNum === this.lastState.tableNum;
+    return this.id === this.$original.id &&
+      this.tableNum === this.$original.tableNum;
   }
 
   constructor(data, guestStore) {
-    if (data) {
-      this.guestStore = guestStore;
-      this.update(data);
-    }
+    super(data);
+
+    this.guestStore = guestStore;
+  }
+}
+
+class TableStore extends BaseStore {
+  guestStore = null;
+
+  constructor(guestStore) {
+    super('tables', Table);
+
+    this.guestStore = guestStore;
   }
 
   save() {
     return new Promise((resolve, reject) => {
-      this.ref.update({
-        tableNum: this.tableNum,
-      }, err => {
+      const data = _(toJS(this.items))
+        .map(i => _.omit(i, ['guestStore', '$original']))
+        .keyBy('id')
+        .value();
+
+      this.ref.set(data, (err) => {
         if (err) {
           reject(err);
         } else {
@@ -57,65 +57,9 @@ export class Table {
 
   @action
   update(data) {
-    this.id = data.id;
-    this.lastState = { ...data };
-    this.ref = data.ref;
-    this.tableNum = data.tableNum;
-  }
-}
-
-class TableStore {
-  firebase = null;
-  guestStore = null;
-  ref = null;
-
-  @observable items = null;
-
-  @computed
-  get asJSON() {
-    return this.items && _.keyBy(this.items.map(i => i.asJSON), 'id');
-  }
-
-  constructor(firebase, guestStore) {
-    this.firebase = firebase;
-    this.ref = firebase.database().ref('tables');
-    this.guestStore = guestStore;
-
-    this.ref.on('value', snapshot => {
-      this.update(snapshot.val());
-    });
-  }
-
-  add(data) {
-    return new Promise((resolve, reject) => {
-      this.ref.push(data, err => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  save() {
-    return new Promise((resolve, reject) => {
-      this.ref.set(this.asJSON, err => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  @action
-  update(tables) {
-    this.items = _.map(tables, (table, key) => new Table({
-      ...table,
+    this.items = _.map(data, (d, key) => new this.State({
+      ...d,
       id: key,
-      ref: this.ref.child(key),
     }, this.guestStore));
   }
 }

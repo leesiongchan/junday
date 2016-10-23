@@ -1,133 +1,133 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import { action } from 'mobx';
+import { computed } from 'mobx';
 import { observer, propTypes as MobxPropTypes } from 'mobx-react';
 import { TextField } from 'material-ui';
 
-import Loader from 'app/components/Loader';
+import MobxField from 'app/controls/MobxField';
 import styles from './styles.css';
+import TablePicker from 'app/controls/TablePicker';
+
+const formFields = [
+  'affiliation',
+  'allocatedTableNum',
+  'id',
+  'name',
+  'partySize',
+  'remarks',
+];
+
+const labels = {
+  affiliation: 'Affiliation',
+  allocatedTableNum: 'Table',
+  name: 'Name',
+  partySize: 'Party Size',
+  remarks: 'Remarks',
+};
+
+const rules = {
+  allocatedTableNum: 'required|integer',
+  name: 'required',
+  partySize: 'required|integer|between:1,10',
+};
+
+export const formOptions = { fields: formFields, labels, rules };
 
 @observer
 class GuestForm extends Component {
   static propTypes = {
-    guest: MobxPropTypes.observableObject.isRequired,
-    settingStore: PropTypes.object.isRequired,
-    tableStore: PropTypes.object.isRequired,
+    className: PropTypes.string,
+    fields: MobxPropTypes.observableObject.isRequired,
+    numTables: PropTypes.number,
+    seatingCapacity: PropTypes.number,
+    tables: PropTypes.array,
   };
 
-  @action
-  handleInputChange(ev) {
-    this.props.guest[ev.target.name] = ev.target.value;
+  @computed
+  get guest() {
+    const guest = this.props.fields.values();
 
-    // We need to further checking to determine whether the partySize has exceed
-    // the capacity of the table.
-    if (ev.target.name === 'partySize' && this.props.guest.allocatedTableNum !== null) {
-      const table = this.props.tableStore.items.find(t => t.tableNum === this.props.guest.allocatedTableNum);
-
-      if (table && this.props.guest.partySize > (this.props.settingStore.seatingCapacity - table.numPeople)) {
-        this.props.guest.allocatedTableNum = null;
-      }
-    }
+    return {
+      ...guest,
+      allocatedTableNum: parseInt(guest.allocatedTableNum, 10),
+      partySize: parseInt(guest.partySize, 10),
+    };
   }
-  handleInputChange = ::this.handleInputChange;
-
-  @action
-  handleTableClick(table) {
-    if (this.props.guest.partySize <= (this.props.settingStore.seatingCapacity - table.numPeople)) {
-      this.props.guest.allocatedTableNum = table.tableNum;
-    }
-  }
-  handleTableClick = ::this.handleTableClick;
 
   render() {
-    const { guest, settingStore, tableStore } = this.props;
+    const { className, fields, numTables, seatingCapacity, tables } = this.props;
 
     return (
-      <form className={styles.main}>
+      <div className={cx(styles.main, className)}>
         <aside className={styles.aside}>
-          <TextField
+          <MobxField
+            component={TextField}
+            field={fields.$('name')}
             floatingLabelFixed
-            floatingLabelText="Name*"
             fullWidth
             hintText="Harvey Spectre"
-            keyboardFocused
             name="name"
-            onChange={this.handleInputChange}
             required
             type="text"
-            value={guest.name}
           />
 
-          <TextField
+          <MobxField
+            component={TextField}
+            field={fields.$('affiliation')}
             floatingLabelFixed
-            floatingLabelText="Affiliation"
             fullWidth
             hintText="Bride's friend"
             name="affiliation"
-            onChange={this.handleInputChange}
             required
             type="text"
-            value={guest.affiliation}
           />
 
-          <TextField
+          <MobxField
+            component={TextField}
+            field={fields.$('partySize')}
             floatingLabelFixed
-            floatingLabelText="Party Size*"
             fullWidth
             hintText="3"
             min={0}
             name="partySize"
-            onChange={this.handleInputChange}
             required
             type="number"
-            value={guest.partySize}
           />
 
-          <TextField
+          <MobxField
+            component={TextField}
+            field={fields.$('remarks')}
             floatingLabelFixed
-            floatingLabelText="Remarks"
             fullWidth
             hintText="He is a vegetarian."
             multiLine
             name="remarks"
-            onChange={this.handleInputChange}
             required
             rows={3}
             rowsMax={3}
-            value={guest.remarks}
           />
+
+          {fields.$('allocatedTableNum').error &&
+            <p className={styles.error}>
+              {fields.$('allocatedTableNum').error}
+            </p>
+          }
         </aside>
 
         <div className={styles.content}>
-          <span className={styles.label}>Table Allocation* <i>(Select to assign a table for your guest)</i></span>
+          <span className={styles.label}>
+            Table Allocation <i>(Select to assign a table for your guest)</i>
+          </span>
 
-          {tableStore.items &&
-            <div className={styles.tables}>
-              {tableStore.items.map(table =>
-                <div className={styles.tableItem} key={table.id}>
-                  <div
-                    className={cx(styles.table, {
-                      [styles.busy]: (settingStore.seatingCapacity - table.numPeople) / settingStore.seatingCapacity <= 0.5,
-                      [styles.free]: settingStore.seatingCapacity - table.numPeople > 0,
-                      [styles.full]: settingStore.seatingCapacity - table.numPeople === 0,
-                      [styles.overCapacity]: guest.partySize > (settingStore.seatingCapacity - table.numPeople),
-                      [styles.selected]: guest.allocatedTableNum === table.tableNum,
-                    })}
-                    onClick={() => this.handleTableClick(table)}
-                  >
-                    <span className={styles.tableNum}>#{table.tableNum}</span>
-                    <span className={styles.capacity}>{table.numPeople} / {settingStore.seatingCapacity}</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          }
-
-          {!tableStore.items &&
-            <Loader />
-          }
+          <TablePicker
+            guest={this.guest}
+            numTables={numTables}
+            onChange={fields.$('allocatedTableNum').sync}
+            seatingCapacity={seatingCapacity}
+            value={tables}
+          />
         </div>
-      </form>
+      </div>
     );
   }
 }

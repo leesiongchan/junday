@@ -5,7 +5,6 @@ import { action, observable, when } from 'mobx';
 import { browserHistory } from 'react-router';
 import { observer, propTypes as MobxPropTypes } from 'mobx-react';
 
-import Button from 'app/controls/Button';
 import MobxField from 'app/controls/MobxField';
 import MobxForm from 'app/libs/mobx-react-form';
 import styles from './styles.css';
@@ -102,14 +101,14 @@ class LoginForm extends Component {
         </div>
 
         <footer className={styles.footer}>
-          <Button
+          <button
             className={styles.submit}
             disabled={!isValid || this.submitting}
             primary
             type="submit"
           >
             {this.submitting ? 'Logging in...' : 'Log in'}
-          </Button>
+          </button>
         </footer>
       </form>
     );

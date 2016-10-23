@@ -1,19 +1,13 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, observable } from 'mobx';
 
 class AppStore {
-  @observable timer = 0;
-
-  constructor() {
-    setInterval(() => {
-      runInAction(() => {
-        this.timer += 1;
-      });
-    }, 1000);
-  }
+  @observable isGuestDialogOpen = false;
+  @observable guest = null;
 
   @action
-  resetTimer() {
-    this.timer = 0;
+  toggleGuestDialog(open, guest) {
+    this.isGuestDialogOpen = typeof open === 'boolean' ? open : !this.isGuestDialogOpen;
+    this.guest = guest;
   }
 }
 

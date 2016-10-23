@@ -88,8 +88,8 @@
     redux "^3.5.2"
 
 "@kadira/storybook@^2.20.1":
-  version "2.25.0"
-  resolved "https://registry.yarnpkg.com/@kadira/storybook/-/storybook-2.25.0.tgz#55ec078c743c15e8eb3bff1c1d81c5776fec460f"
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@kadira/storybook/-/storybook-2.25.1.tgz#a9eb1d395a1e3d500cc87c8aca9dada438b6123c"
   dependencies:
     "@kadira/react-split-pane" "^1.4.0"
     "@kadira/storybook-addon-actions" "^1.0.2"
@@ -101,7 +101,7 @@
     autoprefixer "^6.3.7"
     babel-core "^6.11.4"
     babel-loader "^6.2.4"
-    babel-plugin-react-docgen "^1.3.0"
+    babel-plugin-react-docgen "^1.3.2"
     babel-preset-react-app "^0.2.1"
     babel-runtime "^6.9.2"
     case-sensitive-paths-webpack-plugin "^1.1.2"
@@ -586,9 +586,9 @@ babel-plugin-check-es2015-constants@^6.3.13:
   dependencies:
     babel-runtime "^6.0.0"
 
-babel-plugin-react-docgen@^1.3.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-docgen/-/babel-plugin-react-docgen-1.3.1.tgz#84254f873c277b3f2eba534d73520085392cd3d8"
+babel-plugin-react-docgen@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-docgen/-/babel-plugin-react-docgen-1.3.2.tgz#13fcf7baa5da06fd2a7ff67d4e2af497b811875e"
   dependencies:
     babel-preset-react "6.x.x"
     babel-types "^6.16.0"
@@ -1477,7 +1477,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames, classnames@^2.2.3:
+classnames@^2.2.3, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -1813,8 +1813,8 @@ cssesc@^0.1.0:
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-0.1.0.tgz#c814903e45623371a0477b40109aaafbeeaddbb4"
 
 "cssnano@>=2.6.1 <4":
-  version "3.7.7"
-  resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-3.7.7.tgz#27fac611380c6a49d6f722c0537e5a988a785010"
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-3.8.0.tgz#bb90ac5292f42b679d9a05f6da0e9697556bb80d"
   dependencies:
     autoprefixer "^6.3.1"
     decamelize "^1.1.2"
@@ -2526,7 +2526,7 @@ find-up@^1.0.0:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
-firebase:
+firebase@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-3.5.1.tgz#1e689252f1b74985b4e18d052662eb4a01b5cfd2"
   dependencies:
@@ -3479,10 +3479,6 @@ loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.3, loader-utils@^0
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-lodash, lodash@^4.0.0, lodash@^4.16.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@4.x.x:
-  version "4.16.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
-
 lodash-es@^4.2.1:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.16.4.tgz#4dc3e2cf33a8c343028aa7f7e06d1c9697042599"
@@ -3756,6 +3752,10 @@ lodash.words@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
+lodash@^4.0.0, lodash@^4.16.2, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@4.x.x:
+  version "4.16.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
+
 longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
@@ -3795,7 +3795,7 @@ map-obj@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
-material-ui:
+material-ui@^0.16.1:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.16.1.tgz#06477ef097541a35ac46c746dac06e35c0211a48"
   dependencies:
@@ -3930,9 +3930,9 @@ mobx-react-devtools@^4.2.6:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/mobx-react-devtools/-/mobx-react-devtools-4.2.9.tgz#46034da90fbcfac3c9cc040fcc3ced72e739518a"
 
-mobx-react-form:
-  version "1.13.6"
-  resolved "https://registry.yarnpkg.com/mobx-react-form/-/mobx-react-form-1.13.6.tgz#e76a204f90a32b27828bebbbef76231f202457de"
+mobx-react-form@^1.13.6:
+  version "1.13.7"
+  resolved "https://registry.yarnpkg.com/mobx-react-form/-/mobx-react-form-1.13.7.tgz#cdbeafcbeed9cdf9b852d39a5d5ad6b1c6ec9423"
   dependencies:
     lodash "^4.16.2"
 
@@ -4711,7 +4711,7 @@ qr.js@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
 
-qrcode.react:
+qrcode.react@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-0.6.1.tgz#e718192d17cdf87cb1f156a34cea16dd67575932"
   dependencies:
@@ -4780,7 +4780,7 @@ react-addons-transition-group@^15.0.0:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-addons-transition-group/-/react-addons-transition-group-15.3.2.tgz#64f758d18bd1e59128726b1c9a4db79127c4f1ed"
 
-react-breadcrumbs:
+react-breadcrumbs@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-breadcrumbs/-/react-breadcrumbs-1.4.1.tgz#bb6c6f8c7c555d9b65eab30fe7926fbe0bb5b604"
   dependencies:
@@ -4879,7 +4879,7 @@ react-simple-di@^1.2.0:
     babel-runtime "6.x.x"
     hoist-non-react-statics "1.x.x"
 
-react-tap-event-plugin:
+react-tap-event-plugin@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-tap-event-plugin/-/react-tap-event-plugin-1.0.0.tgz#7a248505a9e9abecc352b2dab313d17685c51adf"
   dependencies:
@@ -5169,7 +5169,7 @@ rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
 
-sanitize.css:
+sanitize.css@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-4.1.0.tgz#0bafc3c513699f2fe8c7980c6d37edf21d3f5448"
 
@@ -5239,7 +5239,7 @@ sha.js@2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.2.6.tgz#17ddeddc5f722fb66501658895461977867315ba"
 
-shallowequal@0.2.x:
+shallowequal@^0.2.2, shallowequal@0.2.x:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-0.2.2.tgz#1e32fd5bcab6ad688a4812cb0cc04efc75c7014e"
   dependencies:
@@ -5261,7 +5261,7 @@ shelljs@^0.7.4:
     interpret "^1.0.0"
     rechoir "^0.6.2"
 
-shortid:
+shortid@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.6.tgz#3abbefc6c51074cf2c1f1e72f6216a1b45876d72"
 
@@ -5618,7 +5618,7 @@ underscore@~1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
 
-unflatten:
+unflatten@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/unflatten/-/unflatten-1.0.4.tgz#d4222534e594c6e598296fd9bbbe24a7c0ca770c"
   dependencies:
@@ -5700,11 +5700,11 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-validator:
+validator@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-6.1.0.tgz#39aab9a3a5724399a164bda4f5cf9261bb7d0e76"
 
-validatorjs:
+validatorjs@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/validatorjs/-/validatorjs-3.8.0.tgz#39bd9d25fa82e93c25e37441072a9ac950cfbdac"
 

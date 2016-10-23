@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { FontIcon, RaisedButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 
 import styles from './styles.css';
 import UserPanel from '../UserPanel';
 
 class Header extends Component {
   static propTypes = {
+    appStore: PropTypes.object.isRequired,
     authStore: PropTypes.object.isRequired,
     navItems: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -21,7 +22,7 @@ class Header extends Component {
   };
 
   render() {
-    const { authStore, navItems } = this.props;
+    const { appStore, navItems } = this.props;
 
     return (
       <header className={styles.main}>
@@ -52,7 +53,7 @@ class Header extends Component {
             */}
           </div>
 
-          <RaisedButton className={styles.button}>
+          <RaisedButton className={styles.button} onClick={() => appStore.toggleGuestDialog(true)}>
             Add Guest
           </RaisedButton>
         </div>

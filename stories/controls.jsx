@@ -1,12 +1,13 @@
 import React from 'react';
 import { storiesOf, action } from '@kadira/storybook';
 
-import Button from 'app/controls/Button';
+import TablePicker from 'app/controls/TablePicker';
 
-storiesOf('Button', module)
-  .add('with text', () => (
-    <Button onClick={action('clicked')}>Hello Button</Button>
-  ))
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>
+const guest = {
+  partySize: 1,
+};
+
+storiesOf('Pickers', module)
+  .add('Table picker', () => (
+    <TablePicker guest={guest} onChange={action('changed')} />
   ));
