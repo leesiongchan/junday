@@ -25,6 +25,7 @@ services:
       - ./node_modules:/srv/junday/node_modules:rw
       - ./src:/srv/junday/src:rw
       - ./stories:/srv/junday/stories:rw
+      - yarn-cache:/root/.yarn-cache
 
   nginx-proxy:
     image: jwilder/nginx-proxy
