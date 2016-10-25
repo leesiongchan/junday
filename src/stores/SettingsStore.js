@@ -17,8 +17,8 @@ class SettingsStore extends BaseStore {
       this.seatingCapacity === this.$original.seatingCapacity;
   }
 
-  constructor(tableStore) {
-    super('settings');
+  constructor(authStore, tableStore) {
+    super(authStore, 'settings');
 
     this.tableStore = tableStore;
   }

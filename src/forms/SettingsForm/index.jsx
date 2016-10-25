@@ -15,7 +15,7 @@ const labels = {
 };
 
 const rules = {
-  numTables: 'required|integer|between:1,30',
+  numTables: 'required|integer|between:1,40',
   seatingCapacity: 'required|integer|between:1,99',
 };
 
@@ -38,8 +38,8 @@ class SettingsForm extends Component {
             component={TextField}
             field={fields.$('numTables')}
             floatingLabelFixed
-            hintText="30"
-            max={30}
+            hintText="40"
+            max={40}
             min={1}
             required
             type="number"

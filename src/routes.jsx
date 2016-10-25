@@ -1,8 +1,9 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router';
+import { IndexRedirect, Route } from 'react-router';
 
 import App from 'app/components/App';
 import AppStore from 'app/stores/AppStore';
+import AuthStore from 'app/stores/AuthStore';
 import GuestIndexPage from 'app/pages/GuestIndexPage';
 import GuestStore from 'app/stores/GuestStore';
 import LoginPage from 'app/pages/LoginPage';
@@ -12,13 +13,15 @@ import SettingsPage from 'app/pages/SettingsPage';
 import SettingsStore from 'app/stores/SettingsStore';
 import TableStore from 'app/stores/TableStore';
 
+const authStore = new AuthStore();
 const appStore = new AppStore();
-const guestStore = new GuestStore();
-const tableStore = new TableStore(guestStore);
-const settingsStore = new SettingsStore(tableStore);
+const guestStore = new GuestStore(authStore);
+const tableStore = new TableStore(authStore, guestStore);
+const settingsStore = new SettingsStore(authStore, tableStore);
 
 const Wrapper = ({ children }) => React.cloneElement(children, {
   appStore,
+  authStore,
   guestStore,
   settingsStore,
   tableStore,
@@ -26,9 +29,9 @@ const Wrapper = ({ children }) => React.cloneElement(children, {
 
 const routes = (
   <Route component={Wrapper}>
-    <Redirect from="/" to="/guests" />
-
     <Route component={App} name="Home" path="/">
+      <IndexRedirect to="/guests" />
+
       <Route path="guests" component={GuestIndexPage} name="Guests" />
       <Route path="settings" component={SettingsPage} name="Settings" />
     </Route>

@@ -4,15 +4,28 @@ import React, { Component, PropTypes } from 'react';
 import { action, observable, when } from 'mobx';
 import { browserHistory } from 'react-router';
 import { observer, propTypes as MobxPropTypes } from 'mobx-react';
+import { RaisedButton, TextField } from 'material-ui';
 
 import MobxField from 'app/controls/MobxField';
 import MobxForm from 'app/libs/mobx-react-form';
 import styles from './styles.css';
 
-const fields = {
-  password: { label: 'Password', rules: 'required|between:8,20' },
-  username: { label: 'Email Address', rules: 'required|email' },
+const formFields = [
+  'email',
+  'password',
+];
+
+const labels = {
+  email: 'Email Address',
+  password: 'Password',
 };
+
+const rules = {
+  email: 'required|email',
+  password: 'required|between:8,30',
+};
+
+export const formOptions = { fields: formFields, labels, rules };
 
 @observer
 class LoginForm extends Component {
@@ -32,7 +45,7 @@ class LoginForm extends Component {
     this.submitting = submitting;
   }
 
-  form = new MobxForm({ fields });
+  form = new MobxForm(formOptions);
 
   @observable submitting = false;
 
@@ -47,25 +60,20 @@ class LoginForm extends Component {
         this.setSubmitting(true);
 
         try {
-          await this.props.authStore.authenticate(form.values());
+          await this.props.authStore.signIn(form.values());
 
           form.reset();
 
           when(
             () => this.props.authStore.user,
             () => {
-              if (this.props.authStore.isAccessGranted) {
-                // Redirects
-                if (this.props.autoRedirect) {
-                  if (this.props.location.state && this.props.location.state.redirect) {
-                    browserHistory.push(this.props.location.state.redirect);
-                  } else {
-                    browserHistory.push('/');
-                  }
+              // Redirects
+              if (this.props.autoRedirect) {
+                if (this.props.location.state && this.props.location.state.redirect) {
+                  browserHistory.push(this.props.location.state.redirect);
+                } else {
+                  browserHistory.push('/');
                 }
-              } else {
-                this.props.authStore.unauthorize();
-                form.invalidate('You do not have sufficient permissions to access this site.');
               }
             }
           );
@@ -92,23 +100,36 @@ class LoginForm extends Component {
           }
 
           <div className={styles.field}>
-            <MobxField component="input" field={this.form.$('username')} required type="email" />
+            <MobxField
+              component={TextField}
+              field={this.form.$('email')}
+              floatingLabelFixed
+              required
+              type="email"
+            />
           </div>
 
           <div className={styles.field}>
-            <MobxField component="input" field={this.form.$('password')} required type="password" />
+            <MobxField
+              component={TextField}
+              field={this.form.$('password')}
+              floatingLabelFixed
+              required
+              type="password"
+            />
           </div>
         </div>
 
         <footer className={styles.footer}>
-          <button
+          <RaisedButton
             className={styles.submit}
             disabled={!isValid || this.submitting}
-            primary
+            secondary
+            style={{ color: '#ffffff' }}
             type="submit"
           >
             {this.submitting ? 'Logging in...' : 'Log in'}
-          </button>
+          </RaisedButton>
         </footer>
       </form>
     );

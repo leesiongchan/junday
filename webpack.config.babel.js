@@ -94,17 +94,17 @@ if (isProd) {
         debug: false,
       }),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          dead_code: true,
-          unused: true,
-          warnings: false,
-        },
-        output: {
-          comments: false,
-        },
-        sourceMap: true,
-      }),
+      // new webpack.optimize.UglifyJsPlugin({
+      //   compress: {
+      //     dead_code: true,
+      //     unused: true,
+      //     warnings: false,
+      //   },
+      //   output: {
+      //     comments: false,
+      //   },
+      //   sourceMap: true,
+      // }),
     ],
   };
 } else {

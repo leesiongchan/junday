@@ -3,6 +3,7 @@ import firebaseInstance from 'firebase';
 import config from 'config';
 
 class FirebaseAdapter {
+  auth = null;
   database = null;
   firebase = null;
 
@@ -14,6 +15,7 @@ class FirebaseAdapter {
       storageBucket: config.FIREBASE.STORAGE_BUCKET,
     });
 
+    this.auth = this.firebase.auth;
     this.database = this.firebase.database;
   }
 }

@@ -32,8 +32,8 @@ export class Table extends BaseState {
 class TableStore extends BaseStore {
   guestStore = null;
 
-  constructor(guestStore) {
-    super('tables', Table);
+  constructor(authStore, guestStore) {
+    super(authStore, 'tables', Table);
 
     this.guestStore = guestStore;
   }

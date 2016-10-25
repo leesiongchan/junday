@@ -7,7 +7,7 @@ class Logout extends Component {
   };
 
   componentDidMount() {
-    this.props.authStore.unauthorize();
+    this.props.authStore.signOut();
 
     browserHistory.replace('/');
   }

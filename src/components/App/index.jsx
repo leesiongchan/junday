@@ -3,6 +3,7 @@ import DevTools from 'mobx-react-devtools';
 import React, { Component, PropTypes } from 'react';
 import shortid from 'shortid';
 import { autorun, computed } from 'mobx';
+import { browserHistory } from 'react-router';
 import { observer } from 'mobx-react';
 
 import config from 'config';
@@ -36,9 +37,27 @@ class App extends Component {
   };
 
   componentDidMount() {
-    autorun(() => {
+    this.authHandler = autorun(() => {
+      if (!this.props.authStore.isLoading && !this.props.authStore.user) {
+        browserHistory.replace('/login');
+      }
+    });
+
+    this.guestHandler = autorun(() => {
       this.guestForm.update(this.props.appStore.guest);
     });
+  }
+
+  componentWillUnmount() {
+    if (this.authHandler) {
+      this.authHandler();
+      this.authHandler = null;
+    }
+
+    if (this.guestHandler) {
+      this.guestHandler();
+      this.guestHandler = null;
+    }
   }
 
   guestForm = new MobxForm(guestFormOptions);
@@ -83,6 +102,10 @@ class App extends Component {
 
   render() {
     const { appStore, authStore, children, params, routes, ...props } = this.props;
+
+    if (!this.props.authStore.user) {
+      return null;
+    }
 
     return (
       <div className={styles.main}>

@@ -2,9 +2,11 @@ import _ from 'lodash';
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import shallowEqual from 'shallowequal';
+import { observer } from 'mobx-react';
 
 import styles from './styles.css';
 
+@observer
 class TablePicker extends Component {
   static propTypes = {
     guest: PropTypes.shape({
@@ -77,7 +79,7 @@ class TablePicker extends Component {
   }
 
   handleTableClick(table) {
-    if (this.state.guest.partySize <= (this.props.seatingCapacity - table.numPeople)) {
+    if (this.props.seatingCapacity - this.countOccupiedSeating(table) >= this.state.guest.partySize) {
       this.setState({
         guest: {
           ...this.state.guest,
@@ -105,7 +107,9 @@ class TablePicker extends Component {
                 [styles.busy]: (seatingCapacity - this.countOccupiedSeating(table)) / seatingCapacity <= 0.5,
                 [styles.free]: seatingCapacity - this.countOccupiedSeating(table) > 0,
                 [styles.full]: seatingCapacity - this.countOccupiedSeating(table) === 0,
-                [styles.overCapacity]: seatingCapacity - this.countOccupiedSeating(table) < 0,
+                [styles.overCapacity]: guest.allocatedTableNum === table.tableNum
+                  ? seatingCapacity - this.countOccupiedSeating(table) < 0
+                  : seatingCapacity - this.countOccupiedSeating(table) < guest.partySize,
                 [styles.selected]: guest.allocatedTableNum === table.tableNum,
               })}
               onClick={() => this.handleTableClick(table)}

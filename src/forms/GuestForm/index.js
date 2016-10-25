@@ -88,7 +88,8 @@ class GuestForm extends Component {
             floatingLabelFixed
             fullWidth
             hintText="3"
-            min={0}
+            max={seatingCapacity}
+            min={1}
             name="partySize"
             required
             type="number"

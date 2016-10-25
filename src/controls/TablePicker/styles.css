@@ -3,12 +3,12 @@
 .main {
   lost-flex-container: row;
 
-  max-width: 505.6px;
+  min-width: 675.7px;
 }
 
 /* Components */
 .item {
-  lost-waffle: 1/6 6 5px;
+  lost-waffle: 1/8 8 5px;
 }
 
 .table {
@@ -32,13 +32,13 @@
     background-color: $selective-yellow;
   }
 
-  &.full {
-    background-color: $coral-red;
-  }
-
   &.overCapacity {
     background-color: rgba($black, 0.3);
     cursor: default;
+  }
+
+  &.full {
+    background-color: $coral-red;
   }
 
   &.selected {

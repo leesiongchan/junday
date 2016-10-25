@@ -22,7 +22,7 @@ class Header extends Component {
   };
 
   render() {
-    const { appStore, navItems } = this.props;
+    const { appStore, authStore, navItems } = this.props;
 
     return (
       <header className={styles.main}>
@@ -48,9 +48,7 @@ class Header extends Component {
 
         <div className={styles.right}>
           <div className={styles.userPanel}>
-            {/*
             <UserPanel authStore={authStore} />
-            */}
           </div>
 
           <RaisedButton className={styles.button} onClick={() => appStore.toggleGuestDialog(true)}>

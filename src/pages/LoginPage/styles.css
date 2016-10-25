@@ -4,20 +4,26 @@ $panel-padding : 35px;
 $panel-width   : 350px;
 
 .main {
-  background-color: $wild-sand;
-  min-height: 100vh;
-  display: flex;
   align-items: center;
+  background-color: $wild-sand;
+  background-position: center;
+  background-size: cover;
+  display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 /* Components */
 .header {
-  margin-bottom: calc($panel-padding - 10px);
+}
+
+.logo {
+  height: 50px;
+  margin: 0 auto;
 }
 
 .panel {
-  background-color: $white;
+  background-color: rgba($white, 0.975);
   border: $border;
   margin: 0 auto;
   padding: calc($panel-padding - 10px) $panel-padding;

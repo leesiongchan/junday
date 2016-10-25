@@ -22,8 +22,8 @@ export class Guest extends BaseState {
 }
 
 class GuestStore extends BaseStore {
-  constructor() {
-    super('guests', Guest);
+  constructor(authStore) {
+    super(authStore, 'guests', Guest);
   }
 }
 

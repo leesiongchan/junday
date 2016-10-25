@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { action, observable } from 'mobx';
+import { action, autorun, observable } from 'mobx';
 
 import firebaseAdapter from './adapters/firebase-adapter';
 
@@ -10,17 +10,21 @@ class BaseStore {
   @observable items = [];
   @observable isLoading = false;
 
-  constructor(ref, State) {
+  constructor(authStore, ref, State) {
     this.firebaseAdapter = firebaseAdapter;
 
     this.ref = this.firebaseAdapter.database().ref(ref);
     this.State = State;
 
-    this.setLoading(true);
+    autorun(() => {
+      if (authStore.user) {
+        this.setLoading(true);
 
-    this.ref.on('value', (snapshot) => {
-      this.update(snapshot.val());
-      this.setLoading(false);
+        this.ref.on('value', (snapshot) => {
+          this.update(snapshot.val());
+          this.setLoading(false);
+        });
+      }
     });
   }
 
