@@ -3,26 +3,33 @@
 .main {
   lost-flex-container: row;
 
-  min-width: 675.7px;
+  min-width: 515.6px;
 }
 
 /* Components */
+.capacity {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
 .item {
   lost-waffle: 1/8 8 5px;
 }
 
 .table {
   align-items: center;
+  border-radius: 100%;
   border: 3px solid transparent;
   box-sizing: border-box;
   color: $white;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  height: 80px;
+  height: 60px;
   justify-content: center;
   position: relative;
-  width: 80px;
+  width: 60px;
 
   &.free {
     background-color: $jungle-green;
@@ -48,7 +55,7 @@
 
 .tableNum {
   font-size: 10px;
-  font-weight: bold;
+  font-weight: 600;
   left: 0;
   margin-top: 4px;
   position: absolute;

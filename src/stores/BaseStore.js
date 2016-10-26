@@ -40,6 +40,10 @@ class BaseStore {
     });
   }
 
+  find(id) {
+    return this.items.find(i => i.id === id);
+  }
+
   save(id, data) {
     return new Promise((resolve, reject) => {
       const newData = {

@@ -1,0 +1,83 @@
+@import "variables";
+
+$scanner-size : 400px;
+
+.main {
+  lost-center: $container-width;
+
+  padding-bottom: 60px;
+
+  > * {
+    width: 100%;
+  }
+}
+
+/* Components */
+.aside {
+  margin-right: 50px;
+}
+
+.card {
+  box-sizing: border-box;
+  min-height: 400px;
+  padding: 30px;
+  position: relative;
+}
+
+.content {
+  flex: 1;
+}
+
+.field {
+  &:not(:first-of-type) {
+    margin-top: 15px;
+  }
+}
+
+.message {
+  color: $scorpion;
+  font-size: 18px;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+
+.name {
+  border-bottom: $border;
+  color: $scorpion;
+  font-size: 24px;
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+}
+
+.scanner {
+  background-color: rgba($black, 0.8);
+  clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.scannerWrapper {
+  background-color: transparent;
+  height: $scanner-size;
+  position: relative;
+  width: $scanner-size;
+}
+
+.text {
+  color: $shark;
+  font-weight: 500;
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+}

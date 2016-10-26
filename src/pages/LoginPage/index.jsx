@@ -9,6 +9,9 @@ const BACKGROUND_PHOTOS = [
   'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F13416738_10155005145904768_931751250445213136_o.jpg?alt=media&token=ae1b417c-d24d-4168-a19e-39d75c3a764d',
   'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F13422359_10155005216064768_899742461254954015_o.jpg?alt=media&token=d16505fe-debd-4631-b694-303a62c3026d',
   'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F13458705_10155005130229768_1995584470615303454_o.jpg?alt=media&token=954e66a9-c656-4577-9aa4-10c294b88fbe',
+  'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F13442599_10155005216529768_2266593902334588957_o.jpg?alt=media&token=5892bdc9-a643-4bcb-a66c-e7ab08c9e1b9',
+  'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F14610915_10154637373793114_7059531841882885106_n.jpg?alt=media&token=d9b1ed7d-f95b-46a5-a85b-3cbf6fc971e6',
+  'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F14876165_10208972015631437_952823969_o.jpg?alt=media&token=5d39b853-ede1-48f9-9cc2-92b0a9a68315',
 ];
 
 class LoginPage extends Component {

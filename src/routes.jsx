@@ -9,6 +9,7 @@ import GuestStore from 'app/stores/GuestStore';
 import LoginPage from 'app/pages/LoginPage';
 import Logout from 'app/components/Auth/Logout';
 import NotFoundPage from 'app/pages/NotFoundPage';
+import ScanPage from 'app/pages/ScanPage';
 import SettingsPage from 'app/pages/SettingsPage';
 import SettingsStore from 'app/stores/SettingsStore';
 import TableStore from 'app/stores/TableStore';
@@ -33,6 +34,7 @@ const routes = (
       <IndexRedirect to="/guests" />
 
       <Route path="guests" component={GuestIndexPage} name="Guests" />
+      <Route path="scan" component={ScanPage} name="Scan" />
       <Route path="settings" component={SettingsPage} name="Settings" />
     </Route>
 

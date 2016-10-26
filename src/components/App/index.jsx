@@ -21,6 +21,10 @@ const NAV_ITEMS = [{
   id: shortid(),
   name: 'Settings',
   to: '/settings',
+}, {
+  id: shortid(),
+  name: 'Test Scan',
+  to: '/scan',
 }];
 
 @observer

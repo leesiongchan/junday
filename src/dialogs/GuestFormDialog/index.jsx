@@ -69,7 +69,7 @@ class GuestFormDialog extends Component {
             primary
           />,
         ]}
-        contentStyle={{ maxWidth: 954, width: 'auto' }}
+        contentStyle={{ maxWidth: 795, width: 'auto' }}
         onRequestClose={onClose}
         open={open}
         title={this.isNew ? 'Add Guest' : 'Edit Guest'}
