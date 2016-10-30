@@ -21,7 +21,10 @@ class BaseStore {
         this.setLoading(true);
 
         this.ref.on('value', (snapshot) => {
-          this.update(snapshot.val());
+          if (snapshot.val()) {
+            this.update(snapshot.val());
+          }
+
           this.setLoading(false);
         });
       }
@@ -42,6 +45,18 @@ class BaseStore {
 
   find(id) {
     return this.items.find(i => i.id === id);
+  }
+
+  remove(id) {
+    return new Promise((resolve, reject) => {
+      this.ref.child(id).remove((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
   save(id, data) {

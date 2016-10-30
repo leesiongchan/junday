@@ -2,7 +2,7 @@ import QrReader from 'react-qr-reader';
 import nl2br from 'nl2br';
 import React, { Component, PropTypes } from 'react';
 import { action, computed, observable } from 'mobx';
-import { Card, RaisedButton } from 'material-ui';
+import { Card } from 'material-ui';
 import { observer } from 'mobx-react';
 
 import FieldPanel from './components/FieldPanel';
@@ -41,7 +41,7 @@ class ScanPage extends Component {
               <QrReader
                 handleError={this.handleError}
                 handleScan={this.handleScan}
-                interval={1500}
+                interval={750}
                 previewStyle={{ height: 400, width: 400 }}
               />
 
@@ -75,7 +75,7 @@ class ScanPage extends Component {
 
                   <FieldPanel className={styles.field} label="Table No.">
                     <span className={styles.text}>
-                      {this.result.allocatedTableNum ? `#${this.result.partySize}` : '-'}
+                      {this.result.allocatedTableNum ? `#${this.result.allocatedTableNum}` : '-'}
                     </span>
                   </FieldPanel>
 
@@ -94,7 +94,7 @@ class ScanPage extends Component {
 
               {!this.result &&
                 <p className={styles.message}>
-                  Scan your QR Code to sees your guest information.
+                  Scan your QR Code to see your guest information.
                 </p>
               }
             </Card>

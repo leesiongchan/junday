@@ -1,8 +1,8 @@
 import { action, observable } from 'mobx';
 
 class AppStore {
-  @observable isGuestDialogOpen = false;
   @observable guest = null;
+  @observable isGuestDialogOpen = false;
 
   @action
   toggleGuestDialog(open, guest) {

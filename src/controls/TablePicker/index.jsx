@@ -2,6 +2,7 @@ import _ from 'lodash';
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import shallowEqual from 'shallowequal';
+import Tooltip from 'react-tooltip';
 import { observer } from 'mobx-react';
 
 import styles from './styles.css';
@@ -46,8 +47,9 @@ class TablePicker extends Component {
 
     for (let i = 0; i < this.props.numTables; i++) {
       tables.push({
-        tableNum: i + 1,
+        guests: [],
         numPeople: 0,
+        tableNum: i + 1,
       });
     }
 
@@ -113,6 +115,7 @@ class TablePicker extends Component {
                 [styles.selected]: guest.allocatedTableNum === table.tableNum,
               })}
               onClick={() => this.handleTableClick(table)}
+              data-tip={table.guests.filter(g => g.id !== guest.id).map(g => g.name).join(', ')}
             >
               <span className={styles.tableNum}>#{table.tableNum}</span>
               <span className={styles.capacity}>
@@ -123,6 +126,8 @@ class TablePicker extends Component {
             </div>
           </div>
         )}
+
+        <Tooltip effect="solid" />
       </div>
     );
   }

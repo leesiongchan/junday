@@ -10,9 +10,16 @@ export class Table extends BaseState {
   @observable tableNum = null;
 
   @computed
+  get guests() {
+    return this.guestStore.items.filter(g => (
+      g.allocatedTableNum === this.tableNum
+    ));
+  }
+
+  @computed
   get numPeople() {
-    return this.guestStore.items.reduce((n, i) => (
-      i.allocatedTableNum === this.tableNum ? n + parseInt(i.partySize, 10) : n
+    return this.guestStore.items.reduce((n, g) => (
+      g.allocatedTableNum === this.tableNum ? n + parseInt(g.partySize, 10) : n
     ), 0);
   }
 

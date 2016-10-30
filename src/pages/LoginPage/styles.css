@@ -20,6 +20,12 @@ $panel-width   : 350px;
 .logo {
   height: 50px;
   margin: 0 auto;
+
+  img {
+    height: inherit;
+    margin: 0 auto;
+    width: inherit;
+  }
 }
 
 .panel {

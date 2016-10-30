@@ -13,6 +13,7 @@ class GuestFormDialog extends Component {
     fields: MobxPropTypes.observableObject.isRequired,
     numTables: PropTypes.number.isRequired,
     onClose: PropTypes.func,
+    onDelete: PropTypes.func,
     onSubmit: PropTypes.func,
     open: PropTypes.bool,
     seatingCapacity: PropTypes.number.isRequired,
@@ -52,11 +53,17 @@ class GuestFormDialog extends Component {
   handleSubmit = ::this.handleSubmit;
 
   render() {
-    const { fields, onClose, open, numTables, seatingCapacity, tables } = this.props;
+    const { fields, onClose, onDelete, open, numTables, seatingCapacity, tables } = this.props;
 
     return (
       <Dialog
-        actions={[
+        actions={(!this.isNew ? [
+          <FlatButton
+            disabled={this.submitting}
+            label="Delete"
+            onTouchTap={onDelete}
+          />,
+        ] : []).concat([
           <FlatButton
             disabled={this.submitting}
             label="Cancel"
@@ -68,8 +75,10 @@ class GuestFormDialog extends Component {
             onTouchTap={this.handleSubmit}
             primary
           />,
-        ]}
+        ])}
+        autoScrollBodyContent
         contentStyle={{ maxWidth: 795, width: 'auto' }}
+        modal
         onRequestClose={onClose}
         open={open}
         title={this.isNew ? 'Add Guest' : 'Edit Guest'}

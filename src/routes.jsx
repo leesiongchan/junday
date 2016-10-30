@@ -9,14 +9,16 @@ import GuestStore from 'app/stores/GuestStore';
 import LoginPage from 'app/pages/LoginPage';
 import Logout from 'app/components/Auth/Logout';
 import NotFoundPage from 'app/pages/NotFoundPage';
+import NotificationStore from 'app/stores/NotificationStore';
 import ScanPage from 'app/pages/ScanPage';
 import SettingsPage from 'app/pages/SettingsPage';
 import SettingsStore from 'app/stores/SettingsStore';
 import TableStore from 'app/stores/TableStore';
 
-const authStore = new AuthStore();
 const appStore = new AppStore();
+const authStore = new AuthStore();
 const guestStore = new GuestStore(authStore);
+const notificationStore = new NotificationStore(authStore);
 const tableStore = new TableStore(authStore, guestStore);
 const settingsStore = new SettingsStore(authStore, tableStore);
 
@@ -24,6 +26,7 @@ const Wrapper = ({ children }) => React.cloneElement(children, {
   appStore,
   authStore,
   guestStore,
+  notificationStore,
   settingsStore,
   tableStore,
 });

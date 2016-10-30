@@ -11,6 +11,8 @@ import styles from './styles.css';
 @observer
 class SettingsPage extends Component {
   static propTypes = {
+    authStore: PropTypes.object,
+    notificationStore: PropTypes.object,
     settingsStore: PropTypes.object.isRequired,
   };
 
@@ -46,6 +48,11 @@ class SettingsPage extends Component {
         try {
           await this.props.settingsStore.save(form.values());
           await this.props.settingsStore.rearrangeTables();
+
+          this.props.notificationStore.save({
+            message: `${this.props.authStore.user.email} has updated the settings.`,
+            open: true,
+          });
         } catch (err) {
           console.log('Error', err);
         }

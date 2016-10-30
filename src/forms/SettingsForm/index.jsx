@@ -4,6 +4,8 @@ import { TextField } from 'material-ui';
 
 import MobxField from 'app/controls/MobxField';
 
+const MAX_TABLES = 80;
+
 const formFields = [
   'numTables',
   'seatingCapacity',
@@ -15,7 +17,7 @@ const labels = {
 };
 
 const rules = {
-  numTables: 'required|integer|between:1,48',
+  numTables: `required|integer|between:1,${MAX_TABLES}`,
   seatingCapacity: 'required|integer|between:1,99',
 };
 
@@ -38,8 +40,8 @@ class SettingsForm extends Component {
             component={TextField}
             field={fields.$('numTables')}
             floatingLabelFixed
-            hintText="48"
-            max={48}
+            hintText={MAX_TABLES}
+            max={MAX_TABLES}
             min={1}
             required
             type="number"
