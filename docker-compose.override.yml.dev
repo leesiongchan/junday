@@ -4,7 +4,7 @@ services:
   app:
     environment:
       # This is required when nginx-proxy is enabled.
-      - VIRTUAL_HOST=app.junday
+      - VIRTUAL_HOST=app.mobx.dev
     volumes:
       - ./.yarn.lock:/srv/junday/.yarn.lock:rw
       - ./node_modules:/srv/junday/node_modules:rw
@@ -18,13 +18,13 @@ services:
     environment:
       - TERM=xterm-256color
       # This is required when nginx-proxy is enabled.
-      - VIRTUAL_HOST=storybook.junday
+      - VIRTUAL_HOST=storybook.mobx.dev
     volumes:
-      - ./.storybook:/srv/junday/.storybook:rw
-      - ./.yarn.lock:/srv/junday/.yarn.lock:rw
-      - ./node_modules:/srv/junday/node_modules:rw
-      - ./src:/srv/junday/src:rw
-      - ./stories:/srv/junday/stories:rw
+      - ./.storybook:/srv/junday-storybook/.storybook:rw
+      - ./.yarn.lock:/srv/junday-storybook/.yarn.lock:rw
+      - ./node_modules:/srv/junday-storybook/node_modules:rw
+      - ./src:/srv/junday-storybook/src:rw
+      - ./stories:/srv/junday-storybook/stories:rw
       - yarn-cache:/root/.yarn-cache
 
   nginx-proxy:

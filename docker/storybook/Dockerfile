@@ -6,13 +6,14 @@ RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         yarn
 
-WORKDIR /srv/junday
+WORKDIR /srv/junday-storybook
 
 RUN echo 'set -o allexport\n. ~/.env\nset +o allexport' >> /root/.bashrc \
     && echo '' > /root/.env
 
 COPY .babelrc ./
 COPY .storybook .storybook/
+COPY client-env.js ./
 COPY package.json ./
 COPY src src/
 COPY stories stories/
