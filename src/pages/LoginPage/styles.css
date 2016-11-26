@@ -14,6 +14,15 @@ $panel-width   : 350px;
 }
 
 /* Components */
+.error {
+  color: $coral-red;
+  margin: 10px 0 0;
+}
+
+.footer {
+  margin-top: 20px;
+}
+
 .header {
 }
 
@@ -25,6 +34,18 @@ $panel-width   : 350px;
     height: inherit;
     margin: 0 auto;
     width: inherit;
+  }
+}
+
+.message {
+  color: $white;
+  font-weight: 600;
+  margin: 0 0 20px;
+  padding: 10px 20px;
+  text-align: center;
+
+  &.error {
+    background-color: $coral-red;
   }
 }
 
@@ -42,6 +63,12 @@ $panel-width   : 350px;
   &:hover {
     color: rgba($coral-red, 0.7);
   }
+}
+
+.submit {
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
 }
 
 .title {

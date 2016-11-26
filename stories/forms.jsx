@@ -5,6 +5,7 @@ import { storiesOf, action } from '@kadira/storybook';
 import GuestForm, { formOptions as guestFormOptions } from 'app/forms/GuestForm';
 import MobxForm from 'app/libs/mobx-react-form';
 import SettingsForm, { formOptions as settingsFormOptions } from 'app/forms/SettingsForm';
+import UserForm, { formOptions as userFormOptions } from 'app/forms/UserForm';
 
 const tables = [{
   tableNum: 2,
@@ -40,6 +41,7 @@ const settings = {
 };
 
 const guestForm = new MobxForm({ ...guestFormOptions, values: guest });
+const userForm = new MobxForm(userFormOptions);
 const settingsForm = new MobxForm({ ...settingsFormOptions, values: settings });
 
 storiesOf('Forms', module)
@@ -58,4 +60,7 @@ storiesOf('Forms', module)
   ))
   .add('Settings form', () => (
     <SettingsForm fields={settingsForm} />
+  ))
+  .add('User form', () => (
+    <UserForm fields={userForm} type="login" />
   ));

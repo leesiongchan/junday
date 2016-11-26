@@ -11,7 +11,7 @@ import styles from './styles.css';
 @observer
 class ScanPage extends Component {
   static propTypes = {
-    guestStore: PropTypes.object.isRequired,
+    guestStore: PropTypes.object,
   };
 
   @observable currentData = null;

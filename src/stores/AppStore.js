@@ -2,12 +2,18 @@ import { action, observable } from 'mobx';
 
 class AppStore {
   @observable guest = null;
-  @observable isGuestDialogOpen = false;
+  @observable isGuestFormDialogOpen = false;
+  @observable isSignUpFormDialogOpen = false;
 
   @action
-  toggleGuestDialog(open, guest) {
-    this.isGuestDialogOpen = typeof open === 'boolean' ? open : !this.isGuestDialogOpen;
+  toggleGuestFormDialog(open, guest) {
+    this.isGuestFormDialogOpen = typeof open === 'boolean' ? open : !this.isGuestFormDialogOpen;
     this.guest = guest;
+  }
+
+  @action
+  toggleSignUpFormDialog(open) {
+    this.isSignUpFormDialogOpen = typeof open === 'boolean' ? open : !this.isSignUpFormDialogOpen;
   }
 }
 

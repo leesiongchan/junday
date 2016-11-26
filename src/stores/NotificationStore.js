@@ -3,7 +3,7 @@ import { action, observable } from 'mobx';
 import BaseStore from './BaseStore';
 
 class NotificationStore extends BaseStore {
-  @observable message = null;
+  @observable message = '';
   @observable open = false;
 
   @observable $original = {};

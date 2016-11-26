@@ -14,6 +14,8 @@ import ScanPage from 'app/pages/ScanPage';
 import SettingsPage from 'app/pages/SettingsPage';
 import SettingsStore from 'app/stores/SettingsStore';
 import TableStore from 'app/stores/TableStore';
+import UserIndexPage from 'app/pages/UserIndexPage';
+import UserStore from 'app/stores/UserStore';
 
 const appStore = new AppStore();
 const authStore = new AuthStore();
@@ -21,6 +23,7 @@ const guestStore = new GuestStore(authStore);
 const notificationStore = new NotificationStore(authStore);
 const tableStore = new TableStore(authStore, guestStore);
 const settingsStore = new SettingsStore(authStore, tableStore);
+const userStore = new UserStore(authStore);
 
 const Wrapper = ({ children }) => React.cloneElement(children, {
   appStore,
@@ -29,6 +32,7 @@ const Wrapper = ({ children }) => React.cloneElement(children, {
   notificationStore,
   settingsStore,
   tableStore,
+  userStore,
 });
 
 const routes = (
@@ -39,6 +43,7 @@ const routes = (
       <Route path="guests" component={GuestIndexPage} name="Guests" />
       <Route path="scan" component={ScanPage} name="Scan" />
       <Route path="settings" component={SettingsPage} name="Settings" />
+      <Route path="users" component={UserIndexPage} name="Users" />
     </Route>
 
     <Route component={LoginPage} path="/login" />

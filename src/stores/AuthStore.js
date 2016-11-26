@@ -26,6 +26,10 @@ class AuthStore {
     return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
+  sendPasswordResetEmail(email) {
+    return this.auth.sendPasswordResetEmail(email);
+  }
+
   @action
   setIsLoading(loading) {
     this.isLoading = loading;

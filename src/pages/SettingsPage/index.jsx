@@ -1,19 +1,35 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import { action, autorun, observable } from 'mobx';
+import { action, autorun, computed, observable } from 'mobx';
 import { Card, RaisedButton } from 'material-ui';
 import { observer } from 'mobx-react';
 
 import MobxForm from 'app/libs/mobx-react-form';
+import NotFoundPage from 'app/pages/NotFoundPage';
 import SettingsForm, { formOptions as settingsFormOptions } from 'app/forms/SettingsForm';
 import styles from './styles.css';
+import { ROLE, ROLE_RANK } from 'app/constants/user';
+
+function getRoleRank(role) {
+  switch (role) {
+    case ROLE.USER:
+      return ROLE_RANK.USER;
+
+    case ROLE.ADMIN:
+      return ROLE_RANK.ADMIN;
+
+    default:
+      return 0;
+  }
+}
 
 @observer
 class SettingsPage extends Component {
   static propTypes = {
     authStore: PropTypes.object,
     notificationStore: PropTypes.object,
-    settingsStore: PropTypes.object.isRequired,
+    settingsStore: PropTypes.object,
+    userStore: PropTypes.object,
   };
 
   componentDidMount() {
@@ -33,6 +49,15 @@ class SettingsPage extends Component {
   settingsForm = new MobxForm(settingsFormOptions);
 
   @observable submitting = false;
+
+  @computed
+  get user() {
+    if (!this.props.authStore.user) {
+      return null;
+    }
+
+    return this.props.userStore.findBy(u => u.email === this.props.authStore.user.email);
+  }
 
   @action
   handleSaveClick(ev) {
@@ -64,6 +89,14 @@ class SettingsPage extends Component {
   handleSaveClick = ::this.handleSaveClick;
 
   render() {
+    if (!this.user) {
+      return null;
+    }
+
+    if (getRoleRank(ROLE.ADMIN) > getRoleRank(this.user.role)) {
+      return <NotFoundPage />;
+    }
+
     return (
       <div className={styles.main}>
         <Card>

@@ -115,7 +115,7 @@ class TablePicker extends Component {
                 [styles.selected]: guest.allocatedTableNum === table.tableNum,
               })}
               onClick={() => this.handleTableClick(table)}
-              data-tip={table.guests.filter(g => g.id !== guest.id).map(g => g.name).join(', ')}
+              data-tip={table.guests && table.guests.filter(g => g.id !== guest.id).map(g => g.name).join(', ')}
             >
               <span className={styles.tableNum}>#{table.tableNum}</span>
               <span className={styles.capacity}>

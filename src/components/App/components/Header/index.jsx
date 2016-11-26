@@ -54,7 +54,7 @@ class Header extends Component {
             <UserPanel authStore={authStore} />
           </div>
 
-          <RaisedButton className={styles.button} onClick={() => appStore.toggleGuestDialog(true)}>
+          <RaisedButton className={styles.button} onClick={() => appStore.toggleGuestFormDialog(true)}>
             Add Guest
           </RaisedButton>
         </div>

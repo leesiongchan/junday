@@ -47,6 +47,10 @@ class BaseStore {
     return this.items.find(i => i.id === id);
   }
 
+  findBy(predicate) {
+    return this.items.find(predicate);
+  }
+
   remove(id) {
     return new Promise((resolve, reject) => {
       this.ref.child(id).remove((err) => {

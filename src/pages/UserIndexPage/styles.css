@@ -7,20 +7,14 @@
 }
 
 /* Components */
-.additionalPanel {
-  margin-left: 15px;
+.add {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 30px;
 }
 
 .affiliation {
   color: $scorpion;
   font-size: 12px;
-}
-
-.sort {
-  margin-left: 6px;
-}
-
-.wrapper {
-  align-items: center;
-  display: flex;
 }

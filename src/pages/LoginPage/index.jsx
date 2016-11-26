@@ -1,8 +1,14 @@
 import _ from 'lodash';
+import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
+import { action, observable, when } from 'mobx';
+import { browserHistory } from 'react-router';
+import { observer, propTypes as MobxPropTypes } from 'mobx-react';
+import { RaisedButton } from 'material-ui';
 
-import LoginForm from 'app/components/Auth/LoginForm';
+import MobxForm from 'app/libs/mobx-react-form';
 import styles from './styles.css';
+import UserForm, { formOptions } from 'app/forms/UserForm';
 
 const BACKGROUND_PHOTOS = [
   'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F13403297_10155005216184768_8711558632713375606_o.jpg?alt=media&token=9ee57644-5ee3-47de-bcda-8b84b0e88221',
@@ -13,17 +19,69 @@ const BACKGROUND_PHOTOS = [
   'https://firebasestorage.googleapis.com/v0/b/junday-7dff3.appspot.com/o/images%2F14876165_10208972015631437_952823969_o.jpg?alt=media&token=5d39b853-ede1-48f9-9cc2-92b0a9a68315',
 ];
 
+@observer
 class LoginPage extends Component {
   static propTypes = {
-    authStore: PropTypes.object.isRequired,
+    authStore: PropTypes.object,
     location: PropTypes.object.isRequired,
   };
 
+  state = {
+    backgroundImage: _.sample(BACKGROUND_PHOTOS),
+  };
+
+  @action
+  setSubmitting(submitting) {
+    this.submitting = submitting;
+  }
+
+  form = new MobxForm(formOptions);
+
+  @observable submitting = false;
+
+  handleSubmit(ev) {
+    this.form.onSubmit(ev, {
+      onError: (form) => {
+        const error = _.filter(form.errors(), e => !!e)[0];
+
+        form.invalidate(error);
+      },
+      onSuccess: async (form) => {
+        this.setSubmitting(true);
+
+        try {
+          await this.props.authStore.signIn(form.values());
+
+          form.reset();
+
+          when(
+            () => this.props.authStore.user,
+            () => {
+              // Redirects
+              if (this.props.location.state && this.props.location.state.redirect) {
+                browserHistory.push(this.props.location.state.redirect);
+              } else {
+                browserHistory.push('/');
+              }
+            },
+          );
+        } catch (err) {
+          form.clear();
+          form.invalidate(err.message);
+        } finally {
+          this.setSubmitting(false);
+        }
+      },
+    });
+  }
+  handleSubmit = ::this.handleSubmit;
+
   render() {
-    const { authStore, location } = this.props;
+    const { backgroundImage } = this.state;
+    const { error, isValid } = this.form;
 
     return (
-      <div className={styles.main} style={{ backgroundImage: `url(${_.sample(BACKGROUND_PHOTOS)})` }}>
+      <div className={styles.main} style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className="container">
           <div className={styles.panel}>
             <header className={styles.header}>
@@ -34,7 +92,27 @@ class LoginPage extends Component {
             </header>
 
             <div className={styles.content}>
-              <LoginForm authStore={authStore} location={location} />
+              <form className={styles.form} onSubmit={this.handleSubmit}>
+                <div className={styles.content}>
+                  {error &&
+                    <p className={cx(styles.message, styles.error)}>{error}</p>
+                  }
+
+                  <UserForm fields={this.form} />
+                </div>
+
+                <footer className={styles.footer}>
+                  <RaisedButton
+                    className={styles.submit}
+                    disabled={!isValid || this.submitting}
+                    secondary
+                    style={{ color: '#ffffff' }}
+                    type="submit"
+                  >
+                    {this.submitting ? 'Logging in...' : 'Log in'}
+                  </RaisedButton>
+                </footer>
+              </form>
             </div>
           </div>
         </div>
