@@ -1,0 +1,182 @@
+@import "variables";
+
+$scanner-size : 300px;
+
+.main {
+  align-items: center;
+  background-color: $wild-sand;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* Components */
+.action {
+  color: $white;
+  font-size: 16px;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba($black, 0.7);
+
+  &:hover {
+    color: rgba($white, 0.75);
+  }
+}
+
+.aside {
+  margin-right: 50px;
+}
+
+.button {
+  min-width: 150px;
+
+  + .button {
+    margin-left: 10px;
+  }
+}
+
+.cancel {
+  color: $coral-red;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba($coral-red, 0.75);
+  }
+}
+
+.card {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: $scanner-size;
+  padding: 20px 30px 30px;
+  position: relative;
+}
+
+.container {
+  lost-center: $container-small-width;
+
+  width: 100%;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.content {
+  flex: 1;
+}
+
+.field {
+  &:not(:first-of-type) {
+    margin-top: 15px;
+  }
+}
+
+.footer {
+  bottom: 0;
+  left: 0;
+  margin: 20px;
+  position: absolute;
+}
+
+.header {
+  align-items: center;
+  border-bottom: $border;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.message {
+  color: $scorpion;
+  font-size: 18px;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+
+.name {
+  color: $scorpion;
+  font-size: 24px;
+  margin: 0;
+}
+
+.or {
+  color: $shark;
+  display: block;
+  font-weight: 500;
+  margin: 25px 0;
+}
+
+.progress {
+  color: $scorpion;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.result {
+  flex: 1;
+}
+
+.resultFooter {
+  margin-top: 35px;
+  text-align: right;
+}
+
+.resultWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.scanner {
+  background-color: rgba($black, 0.8);
+  clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.scannerWrapper {
+  background-color: transparent;
+  height: $scanner-size;
+  position: relative;
+  width: $scanner-size;
+  z-index: 1;
+}
+
+.searchWrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.status {
+  &.checkedIn {
+    color: $jungle-green;
+  }
+}
+
+.subtitle {
+  font-size: 18px;
+  margin: 0;
+}
+
+.text {
+  color: $shark;
+  font-weight: 500;
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+}

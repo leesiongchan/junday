@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import cx from 'classnames';
 import QRCode from 'qrcode.react';
 import React, { Component, PropTypes } from 'react';
 import shallowEqual from 'shallowequal';
@@ -149,6 +150,7 @@ class GuestIndexPage extends Component {
                   </span>
                 </TableHeaderColumn>
                 <TableHeaderColumn width="180">Remarks</TableHeaderColumn>
+                <TableHeaderColumn width="120">Status</TableHeaderColumn>
                 <TableHeaderColumn width="150" />
               </TableRow>
             </TableHeader>
@@ -167,6 +169,15 @@ class GuestIndexPage extends Component {
                   <TableRowColumn width="70">{guest.partySize}</TableRowColumn>
                   <TableRowColumn width="120">{guest.allocatedTableNum ? `#${guest.allocatedTableNum}` : 'N/A'}</TableRowColumn>
                   <TableRowColumn width="180">{guest.remarks}</TableRowColumn>
+                  <TableRowColumn width="120">
+                    <span
+                      className={cx(styles.status, {
+                        [styles.checkedIn]: guest.status === 'registered',
+                      })}
+                    >
+                      {guest.status !== 'registered' ? 'Not Registered' : 'Registered'}
+                    </span>
+                  </TableRowColumn>
                   <TableRowColumn style={{ overflow: 'visible' }} width="150">
                     <IconButton
                       iconClassName="material-icons"

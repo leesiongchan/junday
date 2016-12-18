@@ -19,6 +19,10 @@ import { ROLE, ROLE_RANK } from 'app/constants/user';
 
 const NAV_ITEMS = [{
   id: shortid(),
+  name: 'Check In',
+  to: '/check-in',
+}, {
+  id: shortid(),
   name: 'Guests',
   to: '/guests',
 }, {
@@ -57,6 +61,7 @@ class App extends Component {
     authStore: PropTypes.object,
     children: PropTypes.node.isRequired,
     guestStore: PropTypes.object,
+    location: PropTypes.object.isRequired,
     notificationStore: PropTypes.object,
     params: PropTypes.object.isRequired,
     routes: PropTypes.array.isRequired,
@@ -155,13 +160,13 @@ class App extends Component {
   handleGuestFormDialogDeleteClick = ::this.handleGuestFormDialogDeleteClick;
 
   async handleGuestFormDialogSubmit(formData) {
-    const isNew = !this.props.appStore.guest;
+    const isNew = !this.props.appStore.guest || (this.props.appStore.guest && !this.props.appStore.guest.id);
 
     try {
-      if (this.props.appStore.guest) {
-        await this.props.guestStore.save(this.props.appStore.guest.id, formData);
-      } else {
+      if (isNew) {
         await this.props.guestStore.add(formData);
+      } else {
+        await this.props.guestStore.save(this.props.appStore.guest.id, formData);
       }
 
       this.props.notificationStore.save({
@@ -219,25 +224,29 @@ class App extends Component {
 
     return (
       <div className={styles.main}>
-        <Header
-          appStore={appStore}
-          authStore={authStore}
-          className={styles.header}
-          navItems={this.navItems}
-        />
+        {location.pathname !== '/check-in' &&
+          <Header
+            appStore={appStore}
+            authStore={authStore}
+            className={styles.header}
+            navItems={this.navItems}
+          />
+        }
 
         <div className={styles.contentWrapper}>
           <main className={styles.content}>
-            <header className={styles.contentHeader}>
-              <div className={styles.container}>
-                <Breadcrumbs
-                  itemClass={styles.breadcrumbsItem}
-                  params={params}
-                  routes={routes}
-                  wrapperClass={styles.breadcrumbsWrapper}
-                />
-              </div>
-            </header>
+            {location.pathname !== '/check-in' &&
+              <header className={styles.contentHeader}>
+                <div className={styles.container}>
+                  <Breadcrumbs
+                    itemClass={styles.breadcrumbsItem}
+                    params={params}
+                    routes={routes}
+                    wrapperClass={styles.breadcrumbsWrapper}
+                  />
+                </div>
+              </header>
+            }
 
             <div className={styles.innerContent}>
               {React.cloneElement(children, { appStore, authStore, notificationStore, params, routes, ...props })}

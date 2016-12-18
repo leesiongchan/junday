@@ -41,7 +41,7 @@ class ScanPage extends Component {
               <QrReader
                 handleError={this.handleError}
                 handleScan={this.handleScan}
-                interval={750}
+                interval={500}
                 previewStyle={{ height: 400, width: 400 }}
               />
 

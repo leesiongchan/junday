@@ -4,6 +4,7 @@ import { IndexRedirect, Route } from 'react-router';
 import App from 'app/components/App';
 import AppStore from 'app/stores/AppStore';
 import AuthStore from 'app/stores/AuthStore';
+import CheckInPage from 'app/pages/CheckInPage';
 import GuestIndexPage from 'app/pages/GuestIndexPage';
 import GuestStore from 'app/stores/GuestStore';
 import LoginPage from 'app/pages/LoginPage';
@@ -38,8 +39,9 @@ const Wrapper = ({ children }) => React.cloneElement(children, {
 const routes = (
   <Route component={Wrapper}>
     <Route component={App} name="Home" path="/">
-      <IndexRedirect to="/guests" />
+      <IndexRedirect to="check-in" />
 
+      <Route path="check-in" component={CheckInPage} name="Check In" />
       <Route path="guests" component={GuestIndexPage} name="Guests" />
       <Route path="scan" component={ScanPage} name="Scan" />
       <Route path="settings" component={SettingsPage} name="Settings" />

@@ -20,6 +20,12 @@
   margin-left: 6px;
 }
 
+.status {
+  &.checkedIn {
+    color: $jungle-green;
+  }
+}
+
 .wrapper {
   align-items: center;
   display: flex;

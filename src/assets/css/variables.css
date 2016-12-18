@@ -38,7 +38,8 @@ $base-font-weight : 400;
 $base-line-height : 1.43;
 
 /* Grid settings */
-$container-width : 1080px;
+$container-small-width : 960px;
+$container-width       : 1080px;
 
 /* Lost grid settings */
 @lost gutter 25px;

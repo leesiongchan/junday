@@ -1,7 +1,9 @@
 @import "sanitize.css/sanitize.css";
 
+@import "react-select/dist/react-select.css";
+
 @import "variables";
-/* @import "overrides"; */
+@import "overrides";
 
 a {
   color: $black;

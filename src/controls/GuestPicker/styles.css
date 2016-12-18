@@ -1,0 +1,20 @@
+@import "variables";
+
+.main {
+
+}
+
+/* Components */
+.label {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.status {
+  font-size: 12px;
+
+  &.checkedIn {
+    color: $jungle-green;
+  }
+}

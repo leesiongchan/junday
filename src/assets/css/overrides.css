@@ -1,1 +1,45 @@
 // Any third parties override will go here.
+
+/* react-select */
+.Select {
+  &-clear {
+    display: block;
+    line-height: 1;
+    margin-top: 1.5px;
+  }
+
+  &-control {
+    border-radius: 0;
+    border: $border;
+    transition: border-color 0.15s, box-shadow 0.15s;
+
+    &:hover {
+      border-color: rgba($black, 0.25);
+    }
+  }
+
+  &-input,
+  &-placeholder,
+  &--single > &-control &-value {
+    padding-left: 15px;
+    padding-right: 30px;
+  }
+
+  &-menu-outer {
+    border-radius: 0;
+    border: 1px solid rgba($black, 0.25);
+    color: $black;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    z-index: 999999;
+  }
+
+  &-option {
+    &.is-focused {
+      background-color: rgba($wild-sand, 0.5);
+    }
+
+    &.is-selected {
+      background-color: $wild-sand;
+    }
+  }
+}

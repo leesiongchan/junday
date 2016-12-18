@@ -1,0 +1,26 @@
+@import "variables";
+
+.main {
+  display: flex;
+}
+
+/* Components */
+.fieldPane {
+  flex: 1;
+  font-size: 16px;
+}
+
+.label {
+  color: $scorpion;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.labelPane {
+  box-sizing: border-box;
+  margin-top: 3.5px;
+  padding-right: 25px;
+  width: 160px;
+}

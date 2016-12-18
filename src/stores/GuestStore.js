@@ -9,6 +9,7 @@ export class Guest extends BaseState {
   @observable name = null;
   @observable partySize = null;
   @observable remarks = null;
+  @observable status = null;
 
   @computed
   get pristine() {
@@ -17,7 +18,8 @@ export class Guest extends BaseState {
       this.allocatedTableNum === this.$original.allocatedTableNum &&
       this.name === this.$original.name &&
       this.partySize === this.$original.partySize &&
-      this.remarks === this.$original.remarks;
+      this.remarks === this.$original.remarks &&
+      this.status === this.$original.status;
   }
 }
 
