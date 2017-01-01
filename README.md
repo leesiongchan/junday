@@ -9,9 +9,9 @@ You may check out the site at [JunDay](http://junday.xyz).
 ## Features
 
 - [ ] Comprehensive dashboard
-- [ ] User/Administrator management
+- [x] User/Administrator management
 - [x] Record guests information
-- [ ] Register guests by using QR code scan
+- [x] Register guests by using QR code scan
 - [x] Table seating management
 
 ## Getting started
