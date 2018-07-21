@@ -1,10 +1,10 @@
-FROM node:7
+FROM node:9
 
-RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
-    && apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3 \
-    && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        yarn
+# RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
+#     && apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3 \
+#     && apt-get update \
+#     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+#         yarn
 
 WORKDIR /srv/junday
 
