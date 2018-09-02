@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import cx from 'classnames';
+import html2canvas from 'html2canvas';
 import QRCode from 'qrcode.react';
 import React, { Component, PropTypes } from 'react';
 import shallowEqual from 'shallowequal';
@@ -10,6 +11,13 @@ import { observer } from 'mobx-react';
 
 import Loader from 'app/components/Loader';
 import styles from './styles.css';
+
+const downloadQrCode = (guest, dataUrl) => {
+  const link = document.createElement('a');
+  link.download = guest.name;
+  link.href = dataUrl;
+  link.click();
+};
 
 @observer
 class GuestIndexPage extends Component {
@@ -80,9 +88,16 @@ class GuestIndexPage extends Component {
 
   @action
   handleDownloadClick(ev, guest) {
-    this.isPopoverOpen = true;
+    // this.isPopoverOpen = true;
     this.popoverAnchorEl = ev.currentTarget;
     this.popoverGuest = guest;
+
+    setTimeout(() => {
+      html2canvas(this.refs.qrCode).then((canvas) => {
+        downloadQrCode(guest, canvas.toDataURL());
+        this.popoverGuest = null;
+      });
+    }, 35);
   }
   handleDownloadClick = ::this.handleDownloadClick;
 
@@ -217,6 +232,15 @@ class GuestIndexPage extends Component {
           </Table>
         </Card>
 
+        {this.popoverGuest &&
+          <div ref="qrCode" style={{ padding: 10, textAlign: 'center', position: 'absolute', left: '-99999px', top: '-99999px' }}>
+            <div>
+              <QRCode size={256} value={this.popoverGuest.id} />
+              <h3 style={{ margin: '10px 0 0' }}>{this.popoverGuest.name}</h3>
+            </div>
+          </div>
+          }
+
         <Popover
           anchorEl={this.popoverAnchorEl}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -225,7 +249,10 @@ class GuestIndexPage extends Component {
           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           {this.popoverGuest &&
-            <QRCode value={this.popoverGuest.id} />
+            <div ref="qrCodePopup" style={{ padding: 10, textAlign: 'center' }}>
+              <QRCode size={256} value={this.popoverGuest.id} />
+              <h3 style={{ margin: '10px 0 0' }}>{this.popoverGuest.name}</h3>
+            </div>
           }
         </Popover>
       </div>
